@@ -3,11 +3,12 @@ import 'package:adv_basics/widgets/questions_summary.dart';
 import 'package:flutter/material.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen(this.chosenAnswers, {super.key});
+  const ResultsScreen(this.chosenAnswers, this.restartQuiz, {super.key});
 
   final List<String> chosenAnswers;
+  final void Function() restartQuiz;
 
-  List<Map<String, Object>> getSummaryData() {
+  List<Map<String, Object>> get summaryData {
     final List<Map<String, Object>> summary = [];
     for (var i = 0; i < chosenAnswers.length; i++) {
       summary.add({
@@ -23,6 +24,11 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final numTotalQuestions = questions.length;
+    final numCorrectQuestions = summaryData
+        .where((data) => data['correct_answer'] == data['user_answer'])
+        .length;
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -30,15 +36,23 @@ class ResultsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            QuestionsSummary(getSummaryData()), // Here we need to get the function with the parentesis because we don't want to point to it, but get its returned value.
+            Text(
+              'You have answered $numCorrectQuestions questions out of $numTotalQuestions correctly',
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(
               height: 30,
             ),
-            const Text('list of the answers'),
+            QuestionsSummary(
+                summaryData), // Here we need to get the function with the parentesis because we don't want to point to it, but get its returned value.
             const SizedBox(
               height: 30,
             ),
-            TextButton(onPressed: () {}, child: const Text('Restart Quiz!'))
+            TextButton(onPressed: restartQuiz, child: const Text('Restart Quiz!'))
           ],
         ),
       ),
