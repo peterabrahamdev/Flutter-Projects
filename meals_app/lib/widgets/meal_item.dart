@@ -5,9 +5,10 @@ import 'package:transparent_image/transparent_image.dart';
 import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({super.key, required this.meal, required this.onSelectMeal});
 
   final Meal meal;
+  final Function() onSelectMeal;
 
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
@@ -23,7 +24,7 @@ class MealItem extends StatelessWidget {
             .hardEdge, // The Stack widget won't take the shape into consideration, therefore we have to force it
         elevation: 2,
         child: InkWell(
-            onTap: () {},
+            onTap: onSelectMeal,
             child: Stack(
               children: [
                 FadeInImage(
