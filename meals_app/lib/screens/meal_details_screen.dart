@@ -26,6 +26,7 @@ class MealDetailsScreen extends ConsumerWidget {
                   .toggleMealFavoriteStatus(meal);
               // Here we want to use the .read() function because we don't want to listen to changes, just read the available data once.
               // We use the .notifier to access the FavoriteMealsNotifier class, which holds the function that we want to use.
+              // We also use the .read() function when we just want to reach a function in the provider class.
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(wasAdded
