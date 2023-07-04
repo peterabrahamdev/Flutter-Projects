@@ -58,8 +58,24 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             ],
                           ),
                         ),
-                    ], onChanged: (value){}),
+                    ], onChanged: (value) {}),
                   )
+                ],
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Add item'),
+                  ),
                 ],
               )
             ],
