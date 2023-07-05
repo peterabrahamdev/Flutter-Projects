@@ -1,36 +1,19 @@
 import 'package:flutter/material.dart';
+
 import 'package:shopping_list_app/models/grocery_item.dart';
 
 class GroceryList extends StatefulWidget {
-  const GroceryList({super.key, required this.groceryItems});
+  const GroceryList(
+      {super.key, required this.groceryItems, required this.removeItem});
 
   final List<GroceryItem> groceryItems;
+  final void Function(GroceryItem) removeItem;
 
   @override
   State<GroceryList> createState() => _GroceryListState();
 }
 
 class _GroceryListState extends State<GroceryList> {
-  void _removeItem(GroceryItem groceryItem) {
-    final itemIndex = widget.groceryItems.indexOf(groceryItem);
-    setState(() {
-      widget.groceryItems.remove(groceryItem);
-    });
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text('Item deleted.'),
-      duration: const Duration(seconds: 3),
-      action: SnackBarAction(
-        label: 'Undo',
-        onPressed: () {
-          setState(() {
-            widget.groceryItems.insert(itemIndex, groceryItem);
-          });
-        },
-      ),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -40,7 +23,7 @@ class _GroceryListState extends State<GroceryList> {
           key: ValueKey(widget.groceryItems[index]),
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
-            _removeItem(widget.groceryItems[index]);
+            widget.removeItem(widget.groceryItems[index]);
           },
           background: Container(
             color: Theme.of(context).colorScheme.error,
