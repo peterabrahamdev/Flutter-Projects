@@ -35,6 +35,8 @@ class _GroceriesScreenState extends State<GroceriesScreen> {
           _error = 'Something went wrong. Please try again later';
         });
       }
+
+      // We need this so that we can make sure that when we don't have any data in our backend we won't get a null error.s
       if (response.body == 'null') {
         setState(() {
           _isLoading = false;
